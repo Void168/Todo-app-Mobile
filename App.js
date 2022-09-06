@@ -17,14 +17,15 @@ import Task from './components/Task'
 export default function App() {
   const [task, setTask] = useState()
   const [taskItems, setTaskItems] = useState([])
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalTodoVisible, setModalTodoVisible] = useState(false)
+  const [modalBlankVisible, setModalBlankTodoVisible] = useState(false)
   const today = new Date()
 
 
   const addTask = () => {
     Keyboard.dismiss()
     if (task === null) {
-      openModal()
+      openModal1()
     } else {
       setTaskItems([...taskItems, task])
     }
@@ -39,12 +40,16 @@ export default function App() {
   }
 
   const openModal = () => {
-    setModalVisible(!modalVisible)
+    setModalTodoVisible(!modalTodoVisible)
+  }
+
+  const openModal1 = () => {
+    setModalBlankTodoVisible(!modalBlankVisible)
   }
 
   return (
     <View style={styles.container}>
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+      <Modal animationType="slide" transparent={true} visible={modalBlankVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>
@@ -53,7 +58,7 @@ export default function App() {
             <View style={styles.buttonWrapper}>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => completeTask()}
+                onPress={() => openModal1()}
               >
                 <Text style={styles.textStyle}>Tiếp tục</Text>
               </Pressable>
@@ -61,7 +66,7 @@ export default function App() {
           </View>
         </View>
       </Modal>
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+      <Modal animationType="slide" transparent={true} visible={modalTodoVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>
@@ -76,7 +81,7 @@ export default function App() {
               </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
+                onPress={() => setModalTodoVisible(!modalTodoVisible)}
               >
                 <Text style={styles.textStyle}>Chưa hoàn thành</Text>
               </Pressable>
